@@ -103,7 +103,7 @@ Type changes apply to newly created virtual controllers. For unwanted desktop or
 
 
 ## Desktop integration and session control
-Clipboard sync supports text and images in both directions. Shared folders expose selected directories with paired-device permissions. Enable the capability and configure directories and permissions on the host, then use the client's clipboard or host-files entry. USB forwarding needs transport components and explicit device authorization.
+Clipboard sync supports text and images in both directions. Files and folders copied on the host can be pasted in Moonlight for Windows: only their names and sizes are sent when copied, each file is read (as the signed-in user) and transferred when pasted. Shared folders expose selected directories with paired-device permissions. Enable the capability and configure directories and permissions on the host, then use the client's clipboard or host-files entry. USB forwarding needs transport components and explicit device authorization.
 
 
 

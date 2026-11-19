@@ -66,6 +66,8 @@ set(SUNSHINE_HOST_SOURCES
     src/cursor_channel.cpp src/cursor_channel.h
     src/clipboard_blob_store.cpp src/clipboard_blob_store.h
     src/clipboard_http.cpp src/clipboard_http.h
+    src/file_transfer.cpp src/file_transfer.h
+    src/file_transfer_http.cpp src/file_transfer_http.h
     src/video.cpp src/video.h
     src/video_hdr_metadata.cpp src/video_hdr_metadata.h
     src/video_hdr_bitstream.cpp src/video_hdr_bitstream.h

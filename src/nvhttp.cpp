@@ -66,6 +66,7 @@
 #include "nvhttp/ai_api.h"
 #include "nvhttp/apps.h"
 #include "nvhttp/clipboard_api.h"
+#include "file_transfer_http.h"
 #include "nvhttp/display_control.h"
 #include "nvhttp/display_scale.h"
 #include "nvhttp/dynamic_params.h"
@@ -1297,6 +1298,9 @@ namespace nvhttp {
     // use the confighttp /api/v1/clipboard/* endpoints on loopback.
     https_server.resource["^/api/v1/clipboard/blob$"]["POST"] = clipboard_api::upload_blob;
     https_server.resource["^/api/v1/clipboard/blob/([A-Za-z0-9_\\-]{1,128})$"]["GET"] = clipboard_api::get_blob;
+    // Files copied on the host: a client pulls one entry of an offer when the user pastes.
+    https_server.resource["^/api/v1/file-transfer/([0-9a-f\\-]{36})/([0-9]{1,6})$"]["GET"] =
+      [](resp_https_t resp, req_https_t req) { file_transfer_http::handle_download(*resp, *req); };
 
     https_server.resource["^/api/v1/file-mapping/capability$"]["GET"] =
       [&](resp_https_t resp, req_https_t req) {
