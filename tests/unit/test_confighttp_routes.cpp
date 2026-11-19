@@ -301,6 +301,10 @@ TEST_F(ConfigHttpRoutes, EveryRegisteredRouteDispatchesItsMethodPathAndCapturesO
     // Captures with a narrower alphabet need a sample the pattern accepts.
     replace(path, "([0-9a-f]+)", "ab12");
     replace(path, "(icon|card|banner|hero)", "icon");
+    // A file a client copied: session id, offer id, entry index.
+    replace(path, "([0-9]{1,20})", "42");
+    replace(path, "([0-9a-f\\-]{36})", "0b5e3a8c-1d2f-4a6b-8c9d-0e1f2a3b4c5d");
+    replace(path, "([0-9]{1,6})", "3");
     // The remaining captures are component and clipboard/file-mapping IDs.
     path = std::regex_replace(path, std::regex(R"(\([^)]*\))"), "id_1");
     replace(path, "\\/", "/");
