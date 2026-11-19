@@ -12,6 +12,7 @@
 
 #include "config.h"
 #include "file_transfer.h"
+#include "file_transfer_pull.h"
 #include "logging.h"
 
 using namespace std::literals;
@@ -114,6 +115,14 @@ namespace file_transfer_http {
     server.resource["^/api/v1/file-transfer/offers$"]["POST"] =
       [auth_cap](resp_https_t resp, req_https_t req) {
         handle_register(*auth_cap, std::move(resp), std::move(req));
+      };
+    // Files copied on a client: the agent pulls a chunk while the host pastes them.
+    server.resource["^/api/v1/file-transfer/inbound/([0-9]{1,20})/([0-9a-f\\-]{36})/([0-9]{1,6})$"]["GET"] =
+      [auth_cap](resp_https_t resp, req_https_t req) {
+        if (!(*auth_cap)(resp, req)) {
+          return;
+        }
+        file_transfer_pull::handle_pull(std::move(resp), *req);
       };
   }
 

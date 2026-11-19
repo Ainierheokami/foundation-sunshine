@@ -393,6 +393,10 @@
     "method": "POST"
   },
   {
+    "pattern": "^/api/v1/file-transfer/inbound/([0-9]{1,20})/([0-9a-f\\-]{36})/([0-9]{1,6})$",
+    "method": "GET"
+  },
+  {
     "pattern": "^/api/v1/text-context/capability$",
     "method": "POST"
   },

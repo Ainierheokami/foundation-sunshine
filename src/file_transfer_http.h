@@ -6,6 +6,9 @@
  *     Body: {"paths": ["<absolute path>", ...], "type": "clipboard" | "send"}
  *     200: the offer (file_transfer::offer_json); 4xx: {"error": "<word>", "path": "..."}
  *
+ *   GET /api/v1/file-transfer/inbound/<sid>/<id>/<index>?offset=&length=
+ *     confighttp, for the GUI agent: a chunk of a file a client copied (file_transfer_pull.h)
+ *
  *   GET /api/v1/file-transfer/<id>/<index>       nvhttp, for paired clients
  *     The file's bytes; "Range: bytes=N-" answers 206 from N on.
  *     403 clipboard_sync_disabled, 404 not_found, 409 changed, 410 gone, 416, 503 no_user.
@@ -38,7 +41,7 @@ namespace file_transfer_http {
   json_response_t
   make_register_response(const std::string &body);
 
-  /// Register POST /api/v1/file-transfer/offers on confighttp.
+  /// Register POST /api/v1/file-transfer/offers and GET .../inbound/... on confighttp.
   void
   register_routes(https_server_t &server, auth_fn auth);
 

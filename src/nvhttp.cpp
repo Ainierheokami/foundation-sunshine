@@ -52,6 +52,8 @@
 #include "file_handler.h"
 #include "file_mapping/file_mapping_http.h"
 #include "file_mapping/service.h"
+#include "file_transfer_http.h"
+#include "file_transfer_pull.h"
 #include "globals.h"
 #include "hdr/session_target.h"
 #include "http_util.h"
@@ -66,7 +68,6 @@
 #include "nvhttp/ai_api.h"
 #include "nvhttp/apps.h"
 #include "nvhttp/clipboard_api.h"
-#include "file_transfer_http.h"
 #include "nvhttp/display_control.h"
 #include "nvhttp/display_scale.h"
 #include "nvhttp/dynamic_params.h"
@@ -1301,6 +1302,9 @@ namespace nvhttp {
     // Files copied on the host: a client pulls one entry of an offer when the user pastes.
     https_server.resource["^/api/v1/file-transfer/([0-9a-f\\-]{36})/([0-9]{1,6})$"]["GET"] =
       [](resp_https_t resp, req_https_t req) { file_transfer_http::handle_download(*resp, *req); };
+    // Files copied on the client: it answers the host's chunk request (clipboard kind 5) here.
+    https_server.resource["^/api/v1/file-transfer/chunk/([0-9a-f]{32})$"]["POST"] =
+      [](resp_https_t resp, req_https_t req) { file_transfer_pull::handle_chunk(*resp, *req); };
 
     https_server.resource["^/api/v1/file-mapping/capability$"]["GET"] =
       [&](resp_https_t resp, req_https_t req) {
